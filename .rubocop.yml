@@ -35,3 +35,6 @@ Style/Alias:
 
 Style/ClassVars:
   Enabled: false
+
+Style/GlobalVars:
+  Enabled: false
