@@ -36,11 +36,11 @@ module Ldash
     attr_accessor :users, :channels, :servers, :messages, :roles
 
     def initialize
-      @users = {}
-      @channels = {}
-      @servers = {}
-      @messages = {}
-      @roles = {}
+      @users = []
+      @channels = []
+      @servers = []
+      @messages = []
+      @roles = []
     end
   end
 end
