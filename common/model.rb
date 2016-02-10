@@ -8,19 +8,19 @@ module Ldash
 
     attr_accessor :game, :status
 
-    def initialize(username, id, discriminator, avatar)
-      @username = username
-      @id = id
-      @discriminator = discriminator
-      @avatar = avatar
+    def initialize(data)
+      @username = data['username'].to_s
+      @id = data['id'].to_i
+      @discriminator = data['discriminator'].to_i
+      @avatar = data['avatar'].to_s
     end
 
     def compact
       {
-        username: @username,
-        id: @id,
-        discriminator: @discriminator,
-        avatar: @avatar
+        username: @username.to_s,
+        id: @id.to_s,
+        discriminator: @discriminator.to_s,
+        avatar: @avatar.to_s
       }
     end
   end
