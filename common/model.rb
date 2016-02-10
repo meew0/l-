@@ -1,3 +1,5 @@
+require 'base64'
+
 module Ldash
   # Discord user
   class User
@@ -42,6 +44,22 @@ module Ldash
       @messages = []
       @roles = []
       @tokens = []
+
+      @token_num = 0
+    end
+
+    def create_token(user)
+      # The first part of a token is the bot user ID, base 64 encoded.
+      first_part = Base64.encode64(user.id.to_s).strip
+
+      # Then comes a string that's counted up globally.
+      @token_num += 1
+      second_part = Base64.encode64([@token_num].pack('Q>').sub(/^\x00+/, '')).strip
+
+      # The third part is probably randomly generated
+      third_part = Base64.encode64([*0..17].map(rand(0..255)).pack('C*')).strip
+
+      "#{first_part}.#{second_part}.#{third_part}"
     end
   end
 end
