@@ -15,8 +15,8 @@ module Ldash
     end
 
     def session!
-      fail_invalid 'no session' unless defined? @@session
-      @@session
+      fail_invalid 'no session' unless defined? $session
+      $session
     end
   end
 end
