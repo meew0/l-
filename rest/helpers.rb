@@ -14,4 +14,9 @@ module Ldash
       fail_invalid 'invalid JSON'
     end
   end
+
+  def session!
+    halt 'no session' unless @@session
+    @@session
+  end
 end
