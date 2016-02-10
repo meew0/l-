@@ -33,7 +33,7 @@ module Ldash
 
   # L- session
   class Session
-    attr_accessor :users, :channels, :servers, :messages, :roles
+    attr_accessor :users, :channels, :servers, :messages, :roles, :tokens
 
     def initialize
       @users = []
@@ -41,6 +41,7 @@ module Ldash
       @servers = []
       @messages = []
       @roles = []
+      @tokens = []
     end
   end
 end
