@@ -3,7 +3,7 @@ require 'json'
 module Ldash
   module RestHelpers
     def fail_invalid(ldash_message, status = 400, discord_message = '')
-      halt status, %Q({"message": "#{discord_message}", "l-": "#{ldash_message}"})
+      halt status, %({"message": "#{discord_message}", "l-": "#{ldash_message}"})
     end
 
     def json!
@@ -13,10 +13,10 @@ module Ldash
       # Invalid JSON
       fail_invalid 'invalid JSON'
     end
-  end
 
-  def session!
-    halt 'no session' unless @@session
-    @@session
+    def session!
+      fail_invalid 'no session' unless defined? @@session
+      @@session
+    end
   end
 end
