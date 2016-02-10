@@ -8,11 +8,17 @@ module Ldash
 
     attr_accessor :game, :status
 
+    attr_accessor :email, :password
+
     def initialize(data)
       @username = data['username'].to_s
       @id = data['id'].to_i
-      @discriminator = data['discriminator'].to_i
-      @avatar = data['avatar'].to_s
+
+      # optional properties
+      @discriminator = data['discriminator'].to_i if data['discriminator']
+      @avatar = data['avatar'].to_s if data['avatar']
+      @email = data['email'].to_s if data['email']
+      @password = data['password'].to_s if data['password']
     end
 
     def compact
