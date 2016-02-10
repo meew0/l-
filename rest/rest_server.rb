@@ -32,6 +32,12 @@ module Ldash
 
       %({"token": "#{token}"})
     end
+
+    get '/api/gateway' do
+      session!
+
+      'wss://127.0.0.1:6602'
+    end
   end
 end
 
