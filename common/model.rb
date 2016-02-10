@@ -59,7 +59,9 @@ module Ldash
       # The third part is probably randomly generated
       third_part = Base64.encode64([*0..17].map(rand(0..255)).pack('C*')).strip
 
-      "#{first_part}.#{second_part}.#{third_part}"
+      token = "#{first_part}.#{second_part}.#{third_part}"
+      @tokens << token
+      token
     end
   end
 end
