@@ -24,4 +24,17 @@ module Ldash
       }
     end
   end
+
+  # L- session
+  class Session
+    attr_accessor :users, :channels, :servers, :messages, :roles
+
+    def initialize
+      @users = {}
+      @channels = {}
+      @servers = {}
+      @messages = {}
+      @roles = {}
+    end
+  end
 end
