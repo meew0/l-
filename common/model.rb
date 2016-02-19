@@ -1,4 +1,5 @@
 require 'base64'
+require 'ws/dummy_ws'
 
 module Ldash
   # Discord user
@@ -36,6 +37,7 @@ module Ldash
   # L- session
   class Session
     attr_accessor :users, :channels, :servers, :messages, :roles, :tokens
+    attr_accessor :ws
 
     def initialize
       @users = []
@@ -46,6 +48,12 @@ module Ldash
       @tokens = []
 
       @token_num = 0
+
+      @ws = DummyWS.new
+    end
+
+    def ws?
+      @ws.dummy?
     end
 
     def create_token(user)
