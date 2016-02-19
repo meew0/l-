@@ -14,15 +14,15 @@ module Ldash
         ws = Faye::WebSocket.new(env)
 
         ws.on :open do |event|
-          p [:open, ws.object_id]
+          puts "Incoming WS connection - object ID: #{event.object_id}"
         end
 
         ws.on :message do |event|
-          p [:message, event.data]
+          puts "Received message: #{event.data}"
         end
 
         ws.on :close do |event|
-          p [:close, ws.object_id, event.code, event.reason]
+          puts "Closing WS connection from #{event.object_id} (code: #{event.code}, reason: '#{event.reason}')"
           ws = nil
         end
 
