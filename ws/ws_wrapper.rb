@@ -5,6 +5,10 @@ module Ldash
       @ws = ws
     end
 
+    def dummy?
+      false
+    end
+
     def send_ready(session)
       # ...
     end
