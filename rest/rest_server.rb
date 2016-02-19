@@ -1,5 +1,4 @@
 require 'sinatra/base'
-require 'sinatra-websocket'
 
 require 'rest/helpers'
 
@@ -8,6 +7,7 @@ require 'ws/ws_server'
 require 'common/model'
 require 'common/patches'
 require 'common/util'
+
 
 module Ldash
   class RestServer < Sinatra::Base
@@ -21,20 +21,6 @@ module Ldash
       $session = Session.new
       $session.users = data['users'].map { |e| User.new(e) } if data['users']
       '{}'
-    end
-
-    get '/' do
-      if request.websocket?
-        # WebSocket
-        request.websocket do |ws|
-          # Redirect all events to the WS module
-          ws.onopen { WS.onopen(ws) }
-          ws.onmessage { |msg| WS.onmessage(ws, msg) }
-          ws.onclose { WS.onclose(ws) }
-        end
-      else
-        halt 410, 'Not a WebSocket request!'
-      end
     end
 
     post '/api/auth/login' do
