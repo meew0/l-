@@ -53,7 +53,7 @@ module Ldash
     end
 
     def ws?
-      @ws.dummy?
+      !@ws.dummy?
     end
 
     def create_token(user)
