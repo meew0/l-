@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'json'
 
 require 'rest/helpers'
 
@@ -20,7 +21,7 @@ module Ldash
 
       $session = Session.new
       $session.users = data['users'].map { |e| User.new(e) } if data['users']
-      '{}'
+      {}.to_json
     end
 
     post '/api/auth/login' do
@@ -33,13 +34,17 @@ module Ldash
 
       token = session.create_token(user)
 
-      %({"token": "#{token}"})
+      {
+          token: token
+      }.to_json
     end
 
     get '/api/gateway' do
       session!
 
-      'wss://127.0.0.1:6602'
+      {
+          url: 'ws://127.0.0.1:6601/'
+      }.to_json
     end
   end
 end
