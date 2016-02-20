@@ -2,6 +2,7 @@ require 'eventmachine'
 require 'faye/websocket'
 
 require 'ws/ws_wrapper'
+require 'ws/dummy_ws'
 
 Faye::WebSocket.load_adapter('thin')
 
@@ -38,6 +39,7 @@ module Ldash
 
         ws.on :close do |event|
           puts "Closing WS connection from #{event.object_id} (code: #{event.code}, reason: '#{event.reason}')"
+          $session.ws = DummyWS.new
           ws = nil
         end
 
