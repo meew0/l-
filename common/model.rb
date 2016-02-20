@@ -38,6 +38,7 @@ module Ldash
   class Session
     attr_accessor :users, :channels, :servers, :messages, :roles, :tokens
     attr_accessor :ws
+    attr_accessor :large_threshold
 
     def initialize
       @users = []
@@ -70,6 +71,10 @@ module Ldash
       token = "#{first_part}.#{second_part}.#{third_part}"
       @tokens << token
       token
+    end
+
+    def token?(token)
+      @tokens.include? token
     end
   end
 end
