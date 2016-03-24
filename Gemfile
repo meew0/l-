@@ -6,4 +6,5 @@ gem 'faye-websocket'
 
 group :development do
   gem 'rubocop'
+  gem 'rake'
 end
