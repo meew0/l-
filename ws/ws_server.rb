@@ -9,14 +9,13 @@ require 'ws/dummy_ws'
 Faye::WebSocket.load_adapter('thin')
 
 module Ldash
+  # Gateway connection to Discord
   class WS
     # WS protocol version
     VERSION = 3
 
     def initialize(app)
       @app = app
-      $session = Session.new
-      $session = nil
     end
 
     def call(env)
@@ -47,18 +46,18 @@ module Ldash
           d = packet['d']
 
           case packet['op']
-          when 2  # WS initialization, reply with READY
+          when 2 # WS initialization, reply with READY
             # Check whether we have the token
             unless $session.token? d['token']
               puts "Invalid token sent! #{d['token']}"
-              ws.close 4004, 'authentication failed'  # reply as Discord would
+              ws.close 4004, 'authentication failed' # reply as Discord would
               break
             end
 
             # Check the version
             unless d['version'] == VERSION
               puts "Invalid WS version! #{d['version']} != #{VERSION}"
-              ws.close 4998, '[l-] discontinued version'  # we don't know how Discord would reply to this so make a custom one
+              ws.close 4998, '[l-] discontinued version' # we don't know how Discord would reply to this so make a custom one
               break
             end
 
