@@ -271,8 +271,7 @@ module Ldash
 
     data_attribute :roles do |s|
       # @everyone role
-      Role.new(s,
-               id: @id, # role ID = server ID
+      Role.new(id: @id, # role ID = server ID
                name: '@everyone',
                server: self,
                position: -1,
@@ -283,16 +282,14 @@ module Ldash
     data_attribute :channels do |s|
       [
         # #general text channel
-        Channel.new(s,
-                    id: @id,
+        Channel.new(id: @id,
                     name: 'general',
                     server: self,
                     type: 'text',
                     position: 0),
 
         # General voice channel
-        Channel.new(s,
-                    id: @id + 1,
+        Channel.new(id: @id + 1,
                     name: 'General',
                     server: self,
                     type: 'voice',
