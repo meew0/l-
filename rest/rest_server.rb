@@ -20,7 +20,7 @@ module Ldash
       data = json!
 
       $session = Session.new
-      $session.users = data['users'].map { |e| User.new(e) } if data['users']
+      $session.load_preset(data['preset'])
       {}.to_json
     end
 
@@ -35,7 +35,7 @@ module Ldash
       token = session.create_token(user)
 
       {
-          token: token
+        token: token
       }.to_json
     end
 
@@ -43,7 +43,7 @@ module Ldash
       session!
 
       {
-          url: 'ws://127.0.0.1:6601/'
+        url: 'ws://127.0.0.1:6601/'
       }.to_json
     end
   end
