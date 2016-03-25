@@ -411,6 +411,10 @@ module Ldash
       @id = object_id.to_s(16).rjust(32, '0')
     end
 
+    def load_preset(name)
+      load("presets/#{name}")
+    end
+
     def ws?
       !@ws.dummy?
     end
