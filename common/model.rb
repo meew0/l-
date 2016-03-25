@@ -81,16 +81,16 @@ module Ldash
     data_attribute :server
 
     # Server wide voice status
-    data_attribute :mute
-    data_attribute :deaf
+    data_attribute(:mute) { false }
+    data_attribute(:deaf) { false }
     data_attribute :voice_channel
 
-    data_attribute :joined_at
+    data_attribute(:joined_at) { Time.now }
 
-    data_attribute :roles
+    data_attribute(:roles) { [] }
 
-    data_attribute :game
-    data_attribute :status
+    data_attribute(:game) { nil }
+    data_attribute(:status) { 'online' }
 
     def in_voice_channel?
       !@voice_channel.nil?
@@ -126,7 +126,7 @@ module Ldash
         mute: @mute,
         deaf: @deaf,
         session_id: @session.id,
-        channel_id: @voice_channel.id
+        channel_id: @voice_channel ? @voice_channel.id : nil
       }
     end
 
@@ -262,12 +262,12 @@ module Ldash
     data_attribute :name
 
     data_attribute :icon
-    data_attribute :owner
+    data_attribute :owner_id
 
-    data_attribute :afk_timeout
+    data_attribute(:afk_timeout) { 300 }
     data_attribute :afk_channel
 
-    data_attribute :bot_joined_at
+    data_attribute(:bot_joined_at) { Time.now }
 
     data_attribute :roles do |s|
       # @everyone role
@@ -299,9 +299,12 @@ module Ldash
                     bitrate: 64_000)
       ]
     end
-    data_attribute :members
 
-    data_attribute :region
+    data_attribute :members do |s|
+      []
+    end
+
+    data_attribute(:region) { 'london' }
 
     def large?
       @session.large?(@members.length)
@@ -327,7 +330,7 @@ module Ldash
         icon: @icon,
         name: @name,
         large: large?,
-        owner_id: @owner.id,
+        owner_id: @owner_id.to_s,
         region: @region,
         member_count: member_count,
 
@@ -390,7 +393,7 @@ module Ldash
 
   # L- session
   class Session
-    attr_accessor :users, :channels, :servers, :messages, :tokens
+    attr_accessor :users, :private_channels, :servers, :messages, :tokens
     attr_accessor :ws
     attr_accessor :large_threshold, :heartbeat_interval
 
@@ -398,7 +401,7 @@ module Ldash
 
     def initialize
       @users = []
-      @channels = []
+      @private_channels = []
       @servers = []
       @messages = []
       @tokens = []
