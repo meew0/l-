@@ -20,12 +20,12 @@ module Ldash
       attr_accessor(name)
     end
 
-    def initialize(session, data = {})
-      @session = session
+    def initialize(data = {})
+      @session = $session
       attrs = self.class.instance_variable_get('@data_attributes')
       attrs.each do |attr|
         val = data[attr[:name]]
-        val = attr[:proc].call(session) if !val && attr[:proc]
+        val = attr[:proc].call($session) if !val && attr[:proc]
 
         instance_variable_set("@#{attr[:name]}", val)
       end
