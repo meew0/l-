@@ -1,7 +1,7 @@
 # This file is the default session that l- loads if no other session preset is specified
 
 # Create the bot user with the specified arguments.
-bot = User.new(
+bot = Ldash::User.new(
   name: 'l- bot',
   email: 'abc@test.com',
   password: 'l- is awesome!',
@@ -13,14 +13,14 @@ bot = User.new(
 bot_join_time = Time.now
 
 # Create the server
-server = Server.new(
+server = Ldash::Server.new(
   name: 'l- test server',
   owner_id: bot.id,
   bot_joined_at: bot_join_time
 )
 
 # Create the member (user on a server)
-bot_member = Member.new(
+bot_member = Ldash::Member.new(
   user: bot,
   server: server,
   joined_at: bot_join_time
