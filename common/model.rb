@@ -412,7 +412,7 @@ module Ldash
     end
 
     def load_preset(name)
-      load("presets/#{name}")
+      load("presets/#{name}.rb")
     end
 
     def ws?
