@@ -25,7 +25,7 @@ module Ldash
       attrs = self.class.instance_variable_get('@data_attributes')
       attrs.each do |attr|
         val = data[attr[:name]]
-        val = attr[:proc].call($session) if !val && attr[:proc]
+        val = attr[:proc].call($session, self) if !val && attr[:proc]
 
         instance_variable_set("@#{attr[:name]}", val)
       end
@@ -269,35 +269,35 @@ module Ldash
 
     data_attribute(:bot_joined_at) { Time.now }
 
-    data_attribute :roles do |s|
+    data_attribute :roles do |_, this|
       # @everyone role
-      Role.new(id: @id, # role ID = server ID
+      Role.new(id: this.id, # role ID = server ID
                name: '@everyone',
-               server: self,
+               server: this,
                position: -1,
                hoist: false,
                colour: 0)
     end
 
-    data_attribute :channels do |s|
+    data_attribute :channels do |_, this|
       [
         # #general text channel
-        Channel.new(id: @id,
+        Channel.new(id: this.id,
                     name: 'general',
-                    server: self,
+                    server: this,
                     type: 'text',
                     position: 0),
 
         # General voice channel
-        Channel.new(id: @id + 1,
+        Channel.new(id: this.id + 1,
                     name: 'General',
-                    server: self,
+                    server: this,
                     type: 'voice',
                     bitrate: 64_000)
       ]
     end
 
-    data_attribute :members do |s|
+    data_attribute :members do
       []
     end
 
@@ -436,7 +436,7 @@ module Ldash
     end
 
     # Generates an ID according to Discord's snowflake system
-    def generate_id
+    def generate_id(_)
       accurate_timestamp = (Time.now.to_f * 1000).round
       time_part = (accurate_timestamp - DISCORD_EPOCH) << 22
       random_part = rand(0...2**22)
