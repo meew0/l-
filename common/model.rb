@@ -441,7 +441,7 @@ module Ldash
       time_part = (accurate_timestamp - DISCORD_EPOCH) << 22
       random_part = rand(0...2**22)
 
-      time_part & random_part
+      time_part | random_part
     end
 
     def large?(member_count)
